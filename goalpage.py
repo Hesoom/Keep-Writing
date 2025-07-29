@@ -102,7 +102,6 @@ class GoalPage:
         new_btn.config(image=self.btn_images[time]["selected"])
 
         self.root.goal = time
-        print(f"Selected goal: {time} minutes")
 
     def destroy(self):
         self.canvas.destroy()
