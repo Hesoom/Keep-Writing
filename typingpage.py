@@ -73,14 +73,13 @@ class TypingPage:
         if self.remaining_time >= 0:
             self.root.after(1000, self.update_timer)
         else:
-            print("ok u won")
             self.finish()
     
     def update_delete_timer(self):
         self.stop_timer -= 1
         if self.stop_timer >= 0:
             if self.stop_timer == 0:
-                print("TIME OVER")
+                self.time_over()
             elif self.stop_timer < 2:
                 self.entry.config(fg="#E0E0E0")
             elif self.stop_timer < 3:
@@ -89,6 +88,37 @@ class TypingPage:
                 self.entry.config(fg="#808080")    
 
             self.after_id = self.root.after(1000, self.update_delete_timer)
+
+    def time_over(self):
+        self.entry.place_forget()
+        self.timer_label.place_forget()
+
+        self.lost_page_image = PhotoImage(
+            file=relative_to_assets("lostpage.png"))
+        self.lost_page = self.canvas.create_image(
+            533.0,
+            348.0,
+            image=self.lost_page_image
+        )
+
+        self.back_btn_image = PhotoImage(
+            file=relative_to_assets("back_btn.png"))
+        self.back_btn = Button(
+            image=self.back_btn_image,
+            borderwidth=0,
+            highlightthickness=0,
+            command=self.root.show_start_page,
+            relief="flat",
+            activebackground='white',
+            bg='white'
+        )
+        self.back_btn.place(
+            x=453.0,
+            y=385.0,
+            width=160.0,
+            height=39.0
+        )
+
 
     def finish(self):
         self.entry_text = self.entry.get("1.0", "end-1c")
