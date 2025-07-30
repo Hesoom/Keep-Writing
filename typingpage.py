@@ -29,33 +29,56 @@ class TypingPage:
         )
 
         self.entry = Text(
+            wrap="word",
             bd=0,
             bg="#FFFFFF",
-            fg="#353535",
+            fg="#929292",
             highlightthickness=0,
             font=("arial",16)
         )
+        self.entry.insert("1.0", "Start Typing ...")
+        self.entry.focus()
+        self.entry.mark_set("insert", "%d.%d" % (0,0))
         self.entry.place(
             x=259.0,
             y=78.0,
             width=548.0,
-            height=540.0
+            height=480.0
         )
 
         self.started_typing = False
         self.typing = False
         self.entry.bind("<Key>", self.on_key_press)
 
-        self.timer_label = Label(root, text=f"0{self.root.goal}:00" if self.root.goal==5 else f"{self.root.goal}:00", font=("Arial", 19, 'bold'),bg='#E4E4E4',fg="#B1B1B1")
-        self.timer_label.place(x=490, y=0)
+        self.timer_label = Label(root, text=f"0{self.root.goal}:00" if self.root.goal==5 else f"{self.root.goal}:00", font=("Arial", 35),bg="#FFFFFF",fg="#D3D3D3")
+        self.timer_label.place(x=680, y=570)
+
+        self.back_btn_image = PhotoImage(
+            file=relative_to_assets("back_btn.png"))
+        self.back_btn = Button(
+            image=self.back_btn_image,
+            borderwidth=0,
+            highlightthickness=0,
+            command=self.root.show_start_page,
+            relief="flat",
+            activebackground='white',
+            bg='white'
+        )
+        self.back_btn.place(
+            x=270,
+            y=580,
+            width=160.0,
+            height=39.0
+        )
 
         self.status_label = Label(root, text="", fg="black", font=("Arial",14,'italic'))
-        # self.status_label.place(x=10,y=10)
 
     def on_key_press(self,event):
         
         if not self.started_typing:
             self.started_typing = True
+            self.entry.delete("1.0", 'end')
+            self.entry.config(fg="#2C2C2C")
             self.update_timer()
 
         self.entry.config(fg="#353535")
