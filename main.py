@@ -12,7 +12,7 @@ class App(Tk):
         self.geometry("1065x697")
         self.resizable(False, False)
         self.current_page = None
-        self.goal = 1
+        self.goal = 5
         self.show_start_page()
 
     def show_start_page(self):

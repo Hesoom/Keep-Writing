@@ -4,7 +4,7 @@ from utils import relative_to_assets
 class GoalPage:
     def __init__(self, root):
         self.root = root
-        self.selected_time = 5  # Default selection
+        self.root.goal = 5  # Default selection
 
         self.canvas = Canvas(
             root,
@@ -56,7 +56,7 @@ class GoalPage:
         for time, x in x_positions.items():
             image = (
                 self.btn_images[time]["selected"]
-                if time == self.selected_time
+                if time == self.root.goal
                 else self.btn_images[time]["normal"]
             )
             btn = Button(
@@ -90,12 +90,13 @@ class GoalPage:
         )
 
     def clicked(self, time):
-        if time == self.selected_time:
+        if time == self.root.goal:
             return
 
         # Update previous button to normal image
-        prev_btn = self.goal_buttons[self.selected_time]
-        prev_btn.config(image=self.btn_images[self.selected_time]["normal"])
+        prev_btn = self.goal_buttons[self.root.goal]
+        prev_btn.config(image=self.btn_images[self.root.goal]["normal"])
+        print(time)
 
         # Update new selected button to active image
         new_btn = self.goal_buttons[time]
